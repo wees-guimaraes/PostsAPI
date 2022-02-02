@@ -1,5 +1,6 @@
 package br.com.fiap.ecommerce.resources;
 
+import br.com.fiap.ecommerce.domain.Post;
 import br.com.fiap.ecommerce.domain.User;
 import br.com.fiap.ecommerce.dto.UserDTO;
 import br.com.fiap.ecommerce.services.UserService;
@@ -22,8 +23,8 @@ public class UserResource {
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll() {
         List<User> list = service.findAll();
-        List<UserDTO> listUserDTO = list.stream().map(user -> new UserDTO(user)).collect(Collectors.toList());
-        listUserDTO.forEach(l -> System.out.println(l));
+        List<UserDTO> listUserDTO = list.stream().map(UserDTO::new).collect(Collectors.toList());
+        listUserDTO.forEach(System.out::println);
 
         return ResponseEntity.ok().body(listUserDTO);
     }
@@ -32,6 +33,13 @@ public class UserResource {
     public ResponseEntity<UserDTO> findById(@PathVariable String id) {
         User userEntity = service.findById(id);
         return ResponseEntity.ok().body(new UserDTO(userEntity));
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User userEntity = service.findById(id);
+
+        return ResponseEntity.ok().body(userEntity.getPosts());
     }
 
     @PostMapping
