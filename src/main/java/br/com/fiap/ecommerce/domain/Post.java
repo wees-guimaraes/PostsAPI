@@ -1,5 +1,6 @@
 package br.com.fiap.ecommerce.domain;
 
+import br.com.fiap.ecommerce.dto.AuthorDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,17 +19,17 @@ public class Post implements Serializable {
     private String body;
     private LocalDate date;
 
-    private User author;
+    private AuthorDTO author;
 
     public Post() {
     }
 
-    public Post(String id, String title, String body, LocalDate date, User author) {
+    public Post(String id, String title, String body, LocalDate date, AuthorDTO authorDTO) {
         this.id = id;
         this.title = title;
         this.body = body;
         this.date = date;
-        this.author = author;
+        this.author = authorDTO;
     }
 
     @Override
@@ -36,11 +37,11 @@ public class Post implements Serializable {
         return Objects.hash(id, title, body, date);
     }
 
-    public User getAuthor() {
+    public AuthorDTO getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(AuthorDTO author) {
         this.author = author;
     }
 
